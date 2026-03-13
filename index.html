@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YOUR PROJECT NAME – YOUR NAME Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ===== DESIGN TOKENS ===== */
+    :root {
+      --bg: #0d0d0f;
+      --bg-card: #13131a;
+      --bg-card2: #1a1a24;
+      --accent: #c8f55a;        /* change this to your accent color */
+      --accent2: #7b61ff;
+      --text: #e8e6f0;
+      --muted: #7a7890;
+      --border: #2a2a3a;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+      --max-w: 1100px;
+      --section-gap: 100px;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; border-radius: 6px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ===== NOISE TEXTURE OVERLAY ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3, h4, h5 { font-family: var(--font-display); line-height: 1.2; }
+    h1 { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 800; letter-spacing: -1px; }
+    h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; }
+    h3 { font-size: 1.25rem; font-weight: 600; }
+    h4 { font-size: 1rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-family: var(--font-mono); }
+
+    /* ===== LAYOUT ===== */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+    section { padding: var(--section-gap) 0; }
+    .section-label {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 4px 10px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13,13,15,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+    nav .inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .nav-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+    }
+    .nav-name span { color: var(--accent); }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a { color: var(--muted); font-size: 0.875rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .nav-links .btn-outline {
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 6px 16px;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      transition: background 0.2s;
+    }
+    .nav-links .btn-outline:hover { background: var(--accent); color: #000; }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 80px 0 60px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .hero h1 { margin-bottom: 28px; }
+    .hero h1 .highlight { color: var(--accent); }
+
+    /* Project meta grid */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 40px 0;
+    }
+    .meta-item {
+      background: var(--bg-card);
+      padding: 16px 20px;
+    }
+    .meta-item dt {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .meta-item dd {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #000;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); text-decoration: none; }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      padding: 12px 24px;
+      border-radius: 4px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--text); color: var(--text); text-decoration: none; }
+
+    /* ===== SKIP NAV ===== */
+    .skip-nav {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 28px;
+      margin: 48px 0 0;
+    }
+    .skip-nav p {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-family: var(--font-mono);
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .skip-nav-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skip-nav-links a {
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.8rem;
+      padding: 5px 14px;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+    .skip-nav-links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+    /* ===== SECTION HEADERS ===== */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 48px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-header h2 { flex: 1; }
+    .section-number {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    /* ===== GOAL SECTION ===== */
+    #goal .content-with-image {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    #goal p { color: var(--muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 16px; }
+    #goal ul { margin-top: 16px; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    #goal ul li {
+      padding: 10px 16px;
+      background: var(--bg-card);
+      border-left: 3px solid var(--accent);
+      font-size: 0.9rem;
+      border-radius: 0 4px 4px 0;
+    }
+    #goal ul li strong { color: var(--accent); }
+    .goal-image { position: relative; }
+    .goal-image img { width: 100%; aspect-ratio: 16/10; object-fit: cover; }
+
+    /* ===== IMAGE GALLERY ===== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .gallery-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+    .gallery-grid.four-col { grid-template-columns: repeat(4, 1fr); }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+      cursor: pointer;
+      aspect-ratio: 16/9;
+    }
+    .gallery-item.tall { aspect-ratio: 4/3; }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 6px;
+      transition: transform 0.4s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-item .caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      padding: 24px 14px 12px;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.75);
+      font-family: var(--font-mono);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .gallery-item:hover .caption { opacity: 1; }
+
+    /* Subsection gallery */
+    .gallery-subsection { margin-bottom: 40px; }
+    .gallery-subsection h5 {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    /* Thumbnail strip (for iterative top views) */
+    .thumb-strip {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .thumb-strip .thumb {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .thumb-strip .thumb:hover { border-color: var(--accent); transform: scale(1.05); }
+
+    /* ===== OVERVIEW / HIGHLIGHTS ===== */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .setting-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .setting-block h4 { margin-bottom: 12px; }
+    .setting-block p { color: var(--muted); font-size: 0.9rem; margin-bottom: 8px; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .tag {
+      background: rgba(200,245,90,0.08);
+      border: 1px solid rgba(200,245,90,0.2);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      padding: 4px 10px;
+      border-radius: 3px;
+    }
+    .synopsis-block {
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent2);
+      border-radius: 0 8px 8px 0;
+      padding: 24px;
+      margin-top: 24px;
+    }
+    .synopsis-block h4 { color: var(--accent2); margin-bottom: 12px; }
+    .synopsis-block p { color: var(--muted); font-size: 0.95rem; line-height: 1.8; }
+
+    /* Highlight subsections */
+    .highlight-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 60px;
+      align-items: start;
+    }
+    .highlight-block.reverse { direction: rtl; }
+    .highlight-block.reverse > * { direction: ltr; }
+    .highlight-images { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .highlight-images .full-span { grid-column: 1 / -1; }
+    .highlight-text h3 { margin-bottom: 16px; font-size: 1.35rem; }
+    .highlight-text ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+    .highlight-text ul li {
+      padding-left: 20px;
+      position: relative;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+    .highlight-text ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+    .highlight-text ul li strong { color: var(--text); }
+
+    /* ===== WALKTHROUGH / BEATS ===== */
+    .beats-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .beats-nav {
+      position: sticky;
+      top: 70px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .beat-tab {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      background: none;
+      text-align: left;
+      width: 100%;
+    }
+    .beat-tab .thumb-sm {
+      width: 52px;
+      height: 36px;
+      object-fit: cover;
+      border-radius: 3px;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+    .beat-tab .label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+    .beat-tab .label strong {
+      display: block;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .beat-tab:hover, .beat-tab.active {
+      background: var(--bg-card);
+      border-color: var(--border);
+    }
+    .beat-tab.active { border-color: var(--accent); }
+    .beat-tab.active .label strong { color: var(--accent); }
+
+    .beat-panels > .beat-panel { display: none; }
+    .beat-panels > .beat-panel.active { display: block; }
+    .beat-panel h3 { font-size: 1.5rem; margin-bottom: 8px; }
+    .beat-panel .beat-number {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .beat-panel .beat-img { aspect-ratio: 16/8; object-fit: cover; width: 100%; margin-bottom: 24px; }
+    .beat-panel p { color: var(--muted); font-size: 0.95rem; line-height: 1.8; margin-bottom: 12px; }
+    .beat-panel ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    .beat-panel ul li {
+      padding: 10px 16px;
+      background: var(--bg-card);
+      border-radius: 4px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      border-left: 2px solid var(--border);
+    }
+
+    /* Top-down map */
+    .topdown-map {
+      margin-top: 60px;
+      text-align: center;
+    }
+    .topdown-map img { border: 1px solid var(--border); border-radius: 8px; max-width: 100%; }
+
+    /* ===== TECHNIQUES ===== */
+    .techniques-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .technique-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .technique-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .technique-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+    .technique-card .tc-body { padding: 16px 20px; }
+    .technique-card h5 {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .technique-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+    /* ===== PROCESS ===== */
+    .process-timeline { display: flex; flex-direction: column; gap: 60px; }
+    .process-step {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .step-number {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--border);
+      line-height: 1;
+      text-align: center;
+    }
+    .step-content h3 { margin-bottom: 8px; }
+    .step-content .goal-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .step-content .goal-text { font-size: 0.95rem; color: var(--muted); margin-bottom: 16px; }
+    .step-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .step-card {
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .step-card img { width: 100%; aspect-ratio: 16/7; object-fit: cover; }
+    .step-card .step-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.7);
+      padding: 8px 12px;
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      color: rgba(255,255,255,0.6);
+    }
+    .process-text { color: var(--muted); font-size: 0.92rem; line-height: 1.8; }
+    .process-text p { margin-bottom: 12px; }
+    .process-text ul { padding-left: 16px; margin-bottom: 12px; }
+    .process-text li { margin-bottom: 6px; }
+    .process-text strong { color: var(--text); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+    }
+    footer p { color: var(--muted); font-size: 0.8rem; font-family: var(--font-mono); }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 4px; }
+    .lightbox-close {
+      position: absolute;
+      top: 16px; right: 24px;
+      font-size: 2rem;
+      color: var(--muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: color 0.2s;
+    }
+    .lightbox-close:hover { color: var(--text); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      #goal .content-with-image,
+      .overview-grid,
+      .highlight-block,
+      .beats-layout { grid-template-columns: 1fr; }
+      .highlight-block.reverse { direction: ltr; }
+      .beats-nav { position: static; flex-direction: row; overflow-x: auto; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid.four-col { grid-template-columns: repeat(2, 1fr); }
+      .step-cards { grid-template-columns: 1fr; }
+      .process-step { grid-template-columns: 1fr; }
+      .step-number { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="inner">
+    <div class="nav-name">YOUR <span>NAME</span></div>
+    <div class="nav-links">
+      <a href="index.html">Portfolio</a>
+      <a href="about.html">About</a>
+      <a href="cv.pdf" target="_blank">CV</a>
+      <a href="contact.html" class="btn-outline">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <p class="hero-eyebrow">Level Design Project</p>
+    <h1>YOUR PROJECT<br><span class="highlight">NAME HERE</span></h1>
+
+    <!-- ★ PROJECT META ★ -->
+    <dl class="meta-grid">
+      <div class="meta-item"><dt>Genre</dt><dd>Your Genre</dd></div>
+      <div class="meta-item"><dt>Type</dt><dd>Blockout / Level</dd></div>
+      <div class="meta-item"><dt>Engine</dt><dd>Unreal Engine 5</dd></div>
+      <div class="meta-item"><dt>Tools</dt><dd>UE5, Blueprints, etc.</dd></div>
+      <div class="meta-item"><dt>Iterations</dt><dd>#</dd></div>
+      <div class="meta-item"><dt>Playtests</dt><dd>#</dd></div>
+      <div class="meta-item" style="grid-column: span 2;"><dt>Role</dt><dd>Level Designer (research, concept, blockout, scripting, etc.)</dd></div>
+    </dl>
+
+    <div class="hero-actions">
+      <a href="YOUR_BUILD_LINK" target="_blank" class="btn-primary">↓ Download Playable Build</a>
+      <a href="#walkthrough" class="btn-secondary">▶ View Walkthrough</a>
+    </div>
+
+    <!-- Skip nav -->
+    <div class="skip-nav">
+      <p>Skip to section</p>
+      <div class="skip-nav-links">
+        <a href="#goal">Goal</a>
+        <a href="#iterations">Iterations</a>
+        <a href="#overview">Level Overview</a>
+        <a href="#walkthrough">Walkthrough</a>
+        <a href="#techniques">Techniques</a>
+        <a href="#process">Process</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================== GOAL ======================== -->
+<section id="goal">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2>Goal</h2>
+    </div>
+    <div class="content-with-image">
+      <div>
+        <!-- ★ EDIT: describe your project goal ★ -->
+        <p>Describe the main creative goal for your project. What idea were you exploring? What combination of themes, genres, or mechanics did you want to bring together?</p>
+        <p>You can add a second paragraph here to expand on your concept, inspiration, or vision.</p>
+        <p>I also used this project as an opportunity to practice designing these level design elements:</p>
+        <ul>
+          <li><strong>Element 1</strong> – e.g. Combat spaces</li>
+          <li><strong>Element 2</strong> – e.g. Encounter pacing</li>
+          <li><strong>Element 3</strong> – e.g. Enemy placement</li>
+          <li><strong>Element 4</strong> – e.g. Cover types</li>
+        </ul>
+      </div>
+      <div class="goal-image">
+        <!-- ★ REPLACE src with your inspiration image ★ -->
+        <div class="gallery-item tall">
+          <img src="images/inspiration.jpg" alt="Inspiration / mood board" />
+          <div class="caption">Inspiration / mood board</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================== ITERATIVE PROGRESSION ======================== -->
+<section id="iterations">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2>Iterative Progression</h2>
+    </div>
+
+    <div class="gallery-subsection">
+      <h5>Top View Iterations</h5>
+      <!-- ★ Add thumbnail images for each iteration ★ -->
+      <div class="thumb-strip">
+        <img class="thumb lightbox-trigger" src="images/iter-1.jpg" alt="Iteration 1" />
+        <img class="thumb lightbox-trigger" src="images/iter-2.jpg" alt="Iteration 2" />
+        <img class="thumb lightbox-trigger" src="images/iter-3.jpg" alt="Iteration 3" />
+        <img class="thumb lightbox-trigger" src="images/iter-4.jpg" alt="Iteration 4" />
+        <img class="thumb lightbox-trigger" src="images/iter-5.jpg" alt="Iteration 5" />
+        <img class="thumb lightbox-trigger" src="images/iter-6.jpg" alt="Iteration 6" />
+      </div>
+    </div>
+
+    <!-- ★ Add named area galleries, e.g. 3 images per area ★ -->
+    <div class="gallery-subsection">
+      <h5>Area 1 Name</h5>
+      <div class="gallery-grid">
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/area1-a.jpg" alt="Area 1 screenshot" /><div class="caption">Area 1 – description</div></div>
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/area1-b.jpg" alt="Area 1 screenshot" /><div class="caption">Area 1 – description</div></div>
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/area1-c.jpg" alt="Area 1 screenshot" /><div class="caption">Area 1 – description</div></div>
+      </div>
+    </div>
+
+    <div class="gallery-subsection">
+      <h5>Area 2 Name</h5>
+      <div class="gallery-grid">
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/area2-a.jpg" alt="Area 2 screenshot" /><div class="caption">Area 2 – description</div></div>
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/area2-b.jpg" alt="Area 2 screenshot" /><div class="caption">Area 2 – description</div></div>
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/area2-c.jpg" alt="Area 2 screenshot" /><div class="caption">Area 2 – description</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ======================== LEVEL OVERVIEW ======================== -->
+<section id="overview">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2>Level Overview &amp; Highlights</h2>
+    </div>
+
+    <div class="overview-grid">
+      <div>
+        <div class="setting-block">
+          <h4>Setting &amp; Tone</h4>
+          <p><strong>Setting:</strong> Your setting description</p>
+          <p><strong>Tone &amp; Mood:</strong> Key emotions, atmosphere</p>
+          <div class="tag-row">
+            <span class="tag">Engine: UE5</span>
+            <span class="tag">FPS / 3rd Person</span>
+            <span class="tag">PC</span>
+          </div>
+        </div>
+        <div class="synopsis-block">
+          <h4>Synopsis</h4>
+          <!-- ★ Replace with your story synopsis ★ -->
+          <p>Write 2–3 sentences that set up the story of your level. Who is the player character? What situation do they arrive in?</p>
+          <p>Continue the synopsis here — hint at the conflict and what the player will uncover as they explore.</p>
+        </div>
+      </div>
+      <div>
+        <!-- ★ Overview screenshot ★ -->
+        <div class="gallery-item tall">
+          <img class="lightbox-trigger" src="images/overview.jpg" alt="Level overview" />
+        </div>
+      </div>
+    </div>
+
+    <!-- HIGHLIGHT 1 -->
+    <h3 style="margin: 60px 0 28px; font-size:1.35rem;">Narrative-Driven Environment Storytelling</h3>
+    <div class="highlight-block">
+      <div class="highlight-images">
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/story-1.jpg" alt="Narrative shot 1" /></div>
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/story-2.jpg" alt="Narrative shot 2" /></div>
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/story-3.jpg" alt="Narrative shot 3" /></div>
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/story-4.jpg" alt="Narrative shot 4" /></div>
+        <div class="gallery-item full-span"><img class="lightbox-trigger" src="images/story-map.jpg" alt="Map highlight" /></div>
+      </div>
+      <div class="highlight-text">
+        <h3>Storytelling</h3>
+        <ul>
+          <li>Used <strong>environmental storytelling</strong> to create a world that feels alive and reflects the current state of your setting.</li>
+          <li>Told the <strong>story of the inhabitants</strong> through objects or notes scattered throughout the level.</li>
+          <li>Used <strong>environmental "breadcrumbs"</strong> to deepen immersion and guide narrative flow.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- HIGHLIGHT 2 -->
+    <h3 style="margin: 60px 0 28px; font-size:1.35rem;">Supports Multiple Playstyles</h3>
+    <div class="highlight-block reverse">
+      <div class="highlight-images">
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/combat-1.jpg" alt="Combat screenshot" /></div>
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/combat-2.jpg" alt="Combat screenshot" /></div>
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/combat-3.jpg" alt="Combat screenshot" /></div>
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/combat-4.jpg" alt="Combat screenshot" /></div>
+        <div class="gallery-item full-span"><img class="lightbox-trigger" src="images/combat-map.jpg" alt="Combat map highlight" /></div>
+      </div>
+      <div class="highlight-text">
+        <h3>Combat &amp; Player Agency</h3>
+        <ul>
+          <li>Designed combat arenas supporting <strong>multiple playstyles</strong> – stealth, direct combat, and ranged.</li>
+          <li>Added alternate paths, climbable spots, and visual guides to <strong>encourage creative thinking</strong>.</li>
+          <li>Rewarded players for <strong>outsmarting enemies</strong> through smart level composition.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- HIGHLIGHT 3 -->
+    <h3 style="margin: 60px 0 28px; font-size:1.35rem;">Rewarding Exploration</h3>
+    <div class="highlight-block">
+      <div class="highlight-images">
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/explore-1.jpg" alt="Exploration screenshot" /></div>
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/explore-2.jpg" alt="Exploration screenshot" /></div>
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/explore-3.jpg" alt="Exploration screenshot" /></div>
+        <div class="gallery-item"><img class="lightbox-trigger" src="images/explore-4.jpg" alt="Exploration screenshot" /></div>
+        <div class="gallery-item full-span"><img class="lightbox-trigger" src="images/explore-map.jpg" alt="Exploration map highlight" /></div>
+      </div>
+      <div class="highlight-text">
+        <h3>Exploration Rewards</h3>
+        <ul>
+          <li>Placed hidden and visible rewards throughout the level to <strong>drive exploration</strong>.</li>
+          <li>Supported both <strong>casual and completionist players</strong> through layered reward placement.</li>
+          <li>Positioned props and meshes to subtly <strong>guide the player toward secrets</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ======================== WALKTHROUGH ======================== -->
+<section id="walkthrough">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2>Walkthrough</h2>
+    </div>
+
+    <div class="beats-layout">
+      <!-- Beat navigation (left panel) -->
+      <div class="beats-nav">
+        <!-- ★ Duplicate .beat-tab for each beat. Keep data-beat matching panel id ★ -->
+        <button class="beat-tab active" data-beat="beat1">
+          <img class="thumb-sm" src="images/beat1-thumb.jpg" alt="Beat 1" />
+          <div class="label"><strong>Beat 1</strong>Area Name Here</div>
+        </button>
+        <button class="beat-tab" data-beat="beat2">
+          <img class="thumb-sm" src="images/beat2-thumb.jpg" alt="Beat 2" />
+          <div class="label"><strong>Beat 2</strong>Area Name Here</div>
+        </button>
+        <button class="beat-tab" data-beat="beat3">
+          <img class="thumb-sm" src="images/beat3-thumb.jpg" alt="Beat 3" />
+          <div class="label"><strong>Beat 3</strong>Area Name Here</div>
+        </button>
+        <!-- Add more beat tabs as needed -->
+      </div>
+
+      <!-- Beat content panels (right) -->
+      <div class="beat-panels">
+
+        <!-- BEAT 1 -->
+        <div class="beat-panel active" id="beat1">
+          <p class="beat-number">Beat 01</p>
+          <h3>Area Name Here</h3>
+          <img class="beat-img lightbox-trigger" src="images/beat1-main.jpg" alt="Beat 1" />
+          <!-- ★ Description of what happens in this beat ★ -->
+          <p>Describe what the player experiences in this section. Set the scene, the mood, what is introduced here.</p>
+          <ul>
+            <li>Key moment or event in this beat</li>
+            <li>Gameplay mechanic or narrative beat introduced</li>
+            <li>How it sets up the next area</li>
+          </ul>
+        </div>
+
+        <!-- BEAT 2 -->
+        <div class="beat-panel" id="beat2">
+          <p class="beat-number">Beat 02</p>
+          <h3>Area Name Here</h3>
+          <img class="beat-img lightbox-trigger" src="images/beat2-main.jpg" alt="Beat 2" />
+          <p>Describe what the player experiences in Beat 2.</p>
+          <ul>
+            <li>Key moment or event</li>
+            <li>Gameplay mechanic introduced</li>
+            <li>How tone shifts from previous beat</li>
+          </ul>
+        </div>
+
+        <!-- BEAT 3 -->
+        <div class="beat-panel" id="beat3">
+          <p class="beat-number">Beat 03</p>
+          <h3>Area Name Here</h3>
+          <img class="beat-img lightbox-trigger" src="images/beat3-main.jpg" alt="Beat 3" />
+          <p>Describe what the player experiences in Beat 3.</p>
+          <ul>
+            <li>Key moment or event</li>
+            <li>Gameplay mechanic introduced</li>
+            <li>Emotional payoff or twist</li>
+          </ul>
+        </div>
+
+        <!-- Add more beat panels as needed (copy/paste the block above) -->
+
+      </div>
+    </div>
+
+    <!-- Top-down map at bottom -->
+    <div class="topdown-map">
+      <h4 style="margin-bottom:20px;">Top-Down View of Beats</h4>
+      <!-- ★ Replace with your annotated top-down map image ★ -->
+      <img src="images/topdown-map.jpg" alt="Top down map with beat locations" />
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================== TECHNIQUES ======================== -->
+<section id="techniques">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">05</span>
+      <h2>Techniques</h2>
+    </div>
+
+    <div class="techniques-grid">
+      <!-- ★ Duplicate .technique-card for each technique you used ★ -->
+
+      <div class="technique-card">
+        <img src="images/technique-breadcrumbs.jpg" alt="Breadcrumbs technique" />
+        <div class="tc-body">
+          <h5>Use Breadcrumbs to Guide Players</h5>
+          <p>Describe how you used environmental cues (objects, lighting, sounds) to guide the player without explicit arrows or UI.</p>
+        </div>
+      </div>
+
+      <div class="technique-card">
+        <img src="images/technique-framing.jpg" alt="Framing technique" />
+        <div class="tc-body">
+          <h5>Framing</h5>
+          <p>How you used architectural or environmental framing to draw the player's eye to important objects or enemies.</p>
+        </div>
+      </div>
+
+      <div class="technique-card">
+        <img src="images/technique-poi.jpg" alt="Points of Interest" />
+        <div class="tc-body">
+          <h5>Points of Interest (PoI)</h5>
+          <p>Describe a landmark or visual anchor that helped players navigate and remember areas of your level.</p>
+        </div>
+      </div>
+
+      <div class="technique-card">
+        <img src="images/technique-affordances.jpg" alt="Affordances" />
+        <div class="tc-body">
+          <h5>Affordances</h5>
+          <p>How you used familiar visual signals (colors, shapes, props) to communicate interactivity and danger to the player.</p>
+        </div>
+      </div>
+
+      <div class="technique-card">
+        <img src="images/technique-landmarks.jpg" alt="Landmarks" />
+        <div class="tc-body">
+          <h5>Landmarks</h5>
+          <p>How tall or distinctive visual elements helped players understand their position in the level at a glance.</p>
+        </div>
+      </div>
+
+      <div class="technique-card">
+        <img src="images/technique-composition.jpg" alt="Spatial Composition" />
+        <div class="tc-body">
+          <h5>Spatial Composition</h5>
+          <p>How you arranged spaces, paths, and alternate routes to encourage exploration and reward curious players.</p>
+        </div>
+      </div>
+
+      <div class="technique-card">
+        <img src="images/technique-storytelling.jpg" alt="Environmental Storytelling" />
+        <div class="tc-body">
+          <h5>Environmental Storytelling</h5>
+          <p>How props, decorations, and layout told the backstory of your world without dialogue or cutscenes.</p>
+        </div>
+      </div>
+
+      <div class="technique-card">
+        <img src="images/technique-contrast.jpg" alt="Contrast and Composition" />
+        <div class="tc-body">
+          <h5>Contrast &amp; Composition</h5>
+          <p>How you used light, shadow, and color contrast to direct attention and reinforce the mood of key moments.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================== PROCESS ======================== -->
+<section id="process">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">06</span>
+      <h2>Process</h2>
+    </div>
+
+    <div class="process-timeline">
+
+      <!-- STEP 1 -->
+      <div class="process-step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Research, Ideation &amp; Planning</h3>
+          <p class="goal-label">Goal</p>
+          <p class="goal-text">Generate a compelling, cohesive level idea from scratch.</p>
+          <div class="step-cards">
+            <div class="step-card"><img src="images/process1-a.jpg" alt="Miro board" /><div class="step-caption">Brainstorm board (Miro)</div></div>
+            <div class="step-card"><img src="images/process1-b.jpg" alt="Concept doc" /><div class="step-caption">Concept Document</div></div>
+          </div>
+          <div class="process-text">
+            <p><strong>Solution:</strong> Describe your research and ideation approach. What tools did you use? How did you gather feedback and iterate on early ideas?</p>
+            <ul>
+              <li>Used <strong>Miro / FigJam</strong> to brainstorm across categories: Settings, Locations, Events, Enemies, Mechanics</li>
+              <li>Asked peers to <strong>vote</strong> on top concepts to identify strongest directions</li>
+              <li>Created a <strong>short concept document</strong> — early location vision, player goal, and core gameplay loop</li>
+              <li>Gathered <strong>visual references</strong> for mood, tone, and setting</li>
+            </ul>
+            <p><strong>Result:</strong> Summarize what you had at the end of this phase and how it set you up for the next step.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="process-step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Game Beats &amp; 2D Map</h3>
+          <p class="goal-label">Goal</p>
+          <p class="goal-text">Structure gameplay pacing and environment layout from a raw level idea.</p>
+          <div class="step-cards">
+            <div class="step-card"><img src="images/process2-a.jpg" alt="Intensity graph v1" /><div class="step-caption">Intensity Graph V.1</div></div>
+            <div class="step-card"><img src="images/process2-b.jpg" alt="Intensity graph v2" /><div class="step-caption">Intensity Graph V.2</div></div>
+            <div class="step-card"><img src="images/process2-c.jpg" alt="Sketch" /><div class="step-caption">Sketch</div></div>
+            <div class="step-card"><img src="images/process2-d.jpg" alt="2D Map" /><div class="step-caption">2D Map</div></div>
+          </div>
+          <div class="process-text">
+            <p><strong>Solution:</strong> Describe how you structured the level's pacing and created your 2D map.</p>
+            <ul>
+              <li>Broke down the story into a <strong>quest chain</strong> and assigned intensity values to each beat</li>
+              <li>Visualized pacing through an <strong>intensity graph</strong> and iterated based on feedback</li>
+              <li>Sketched the layout and recreated it digitally, aligned with visual storytelling goals</li>
+            </ul>
+            <p><strong>Result:</strong> What did you learn from this phase, and how did it improve your design?</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="process-step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>The First Roughout</h3>
+          <p class="goal-label">Goal</p>
+          <p class="goal-text">Build the playable roughout fast.</p>
+          <div class="step-cards">
+            <div class="step-card"><img src="images/process3-a.jpg" alt="Roughout screenshot 1" /></div>
+            <div class="step-card"><img src="images/process3-b.jpg" alt="Roughout screenshot 2" /></div>
+            <div class="step-card"><img src="images/process3-c.jpg" alt="Roughout screenshot 3" /></div>
+            <div class="step-card"><img src="images/process3-d.jpg" alt="Roughout screenshot 4" /></div>
+          </div>
+          <div class="process-text">
+            <p><strong>Solution:</strong> Describe how you built your first playable version.</p>
+            <ul>
+              <li>Transitioned from 2D map to engine and blocked out the level using simple geometry</li>
+              <li>Iterated in play mode to evaluate readability, navigation, and flow</li>
+              <li>Added <strong>placeholders</strong> for enemies, NPCs, and loot to simulate gameplay structure</li>
+            </ul>
+            <p><strong>Result:</strong> What did the first roughout reveal? What needed to change?</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ★ Continue adding steps for each iteration ★ -->
+      <!-- Copy a .process-step block and update the content -->
+
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>All rights reserved · YOUR NAME · <span id="year"></span></p>
+  </div>
+</footer>
+
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">&times;</button>
+  <img id="lightbox-img" src="" alt="Full size image" />
+</div>
+
+
+<script>
+  // ===== BEAT TABS =====
+  const tabs = document.querySelectorAll('.beat-tab');
+  const panels = document.querySelectorAll('.beat-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.beat;
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(target)?.classList.add('active');
+    });
+  });
+
+  // ===== LIGHTBOX =====
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('.lightbox-trigger').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightbox.classList.add('open');
+    });
+  });
+  document.getElementById('lightbox-close').addEventListener('click', () => lightbox.classList.remove('open'));
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
+
+  // ===== FOOTER YEAR =====
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ===== SCROLL FADE IN =====
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = 1; e.target.style.transform = 'translateY(0)'; } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('section, .technique-card, .process-step').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
